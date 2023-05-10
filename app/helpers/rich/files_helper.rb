@@ -3,7 +3,11 @@ module Rich
 
     def thumb_for_file(file)
       if file.simplified_type == "image"
-        file.rich_file.url(:rich_thumb)
+        if file.class.method_defined?(:rich_file)
+          file.rich_file.url(:rich_thumb)
+        else
+          file.url(:rich_thumb)
+        end
       else
         asset_path "rich/document-thumb.png"
       end
